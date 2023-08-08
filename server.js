@@ -9,6 +9,8 @@ const { PORT = 4000 } = process.env;
 const express = require("express");
 // create application object
 const app = express();
+const usersRouter = require("./controllers/users")
+const restaurantsRouter = require("./controllers/restaurants")
 
 // import middlware
 const cors = require("cors");
@@ -20,6 +22,9 @@ const morgan = require("morgan");
 app.use(cors()); // to prevent cors errors, open access to all origins
 app.use(morgan("dev")); // logging
 app.use(express.json()); // parse json bodies
+
+app.use("/restaurants", restaurantsRouter)
+app.use("/users", usersRouter)
 
 ///////////////////////////////
 // ROUTES
