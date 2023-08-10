@@ -7,13 +7,14 @@ require("dotenv").config();
 const PORT = process.env.PORT || 4000;
 // import express
 const express = require("express");
+const cors = require("cors");
+const { restaurants, users } = require("./controllers")
 // create application object
 const app = express();
-const { restaurants, users } = require("./controllers")
+
 
 // import middlware
-const cors = require("cors");
-const morgan = require("morgan");
+// const morgan = require("morgan");
 
 ///////////////////////////////
 // MiddleWare

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const restaurantsSchema = new mongoose.Schema({
+const restaurantSchema = new mongoose.Schema({
     id: String,
     alias: String,
     name: String,
@@ -48,6 +48,6 @@ const restaurantsSchema = new mongoose.Schema({
     distance: Number          
 });
 
-const Restaurants = mongoose.model("restaurant", restaurantsSchema);
+const Restaurants = mongoose.model("Restaurant", restaurantSchema);
 
 module.exports = Restaurants;

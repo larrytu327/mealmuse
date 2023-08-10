@@ -1,6 +1,6 @@
 require('../config/connection');
 
 module.exports = {
-    Restaurants: require('./restaurants'),
-    Users: require('./users')
+    Restaurants: require('./Restaurants'),
+    Users: require('./Users')
 }

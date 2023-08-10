@@ -13,7 +13,7 @@ const router = express.Router();
 // ROUTES////////////////////////////////
 
   // RESTAURANTS INDEX ROUTE
-  router.get('/', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         let myRestaurants;
         console.log(req.query);
