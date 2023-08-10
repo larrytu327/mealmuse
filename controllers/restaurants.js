@@ -13,50 +13,63 @@ const router = express.Router();
 // ROUTES////////////////////////////////
 
   // RESTAURANTS INDEX ROUTE
-router.get("/", async (req, res) => {
+  router.get('/', async (req, res) => {
     try {
-        // send all people
-        res.json(await Restaurants.find({}));
-    } catch (error) {
-        //send error
-        res.status(400).json(error);
+        let myRestaurants;
+        console.log(req.query);
+        if (req.query.search) {
+            myRestaurants = await Restaurants.find({name: req.query.search})
+            console.log(myRestaurants);
+        } else {
+            myRestaurants = await Restaurants.find({});
+        }
+        res.status(200).json(myRestaurants);
+    } catch(err) {
+        console.log(err);
     }
-});
+})
 
 // RESTAURANTS CREATE ROUTE
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
     try {
-        // send all restaurants
-        res.json(await Restaurants.create(req.body));
-    } catch (error) {
-        //send error
-        res.status(400).json(error);
+        res.status(201).json(await Restaurants.create(req.body));
+    } catch (err) {
+        console.log(err);
     }
+})
+Restaurants.findOne
+
+router.get("/:id", async (req, res) => {
+    try {
+        res.json(await Restaurants.findById(req.params.id));
+      } catch (error) {
+        res.status(400).json(error);
+      }
 });
 
 // RESTAURANTS UPDATE ROUTE
 router.put("/:id", async (req, res) => {
     try {
-        // send all restaurants
-        res.json(
-        await Restaurants.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        );
+      // update by ID
+      res.json(
+        await Restaurants.findByIdAndUpdate(req.params.id, req.body, {new:true})
+      );
     } catch (error) {
-        //send error
-        res.status(400).json(error);
+      //send error
+      res.status(400).json(error);
     }
-});
-    
-// RESTAURANTS DELETE ROUTE
-router.delete("/:id", async (req, res) => {
+  });
+  
+  // DELETE ROUTE
+  router.delete("/:id", async (req, res) => {
     try {
-        // send all restaurants
-        res.json(await Restaurants.findByIdAndRemove(req.params.id));
+      // delete  by ID
+      res.json(await Restaurants.findByIdAndRemove(req.params.id));
     } catch (error) {
-        //send error
-        res.status(400).json(error);
+      //send error
+      res.status(400).json(error);
     }
-});
+  });
   
 
   module.exports = router;

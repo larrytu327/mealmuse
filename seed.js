@@ -1,6 +1,6 @@
 require("dotenv").config();
 // const { MONGODB_URI, APIKey } = process.env;
-const connectionString = process.env.MONGODB_URI;
+const connectionString = process.env.MONGODB_URL;
 const APIKey = process.env.APIKey;
 
 const axios = require('axios');
@@ -25,7 +25,7 @@ const seedingData = async () => {
             }
           };
         //this fetch is for San Francisco with limit of 50 businesses  
-        const myRestaurants = await fetch('https://api.yelp.com/v3/businesses/search?location=San%2520Francisco&sort_by=best_match&limit=1000', options)
+        const myRestaurants = await fetch('https://api.yelp.com/v3/businesses/search?location=San%2520Francisco&sort_by=best_match&limit=500', options)
             .then(response => response.json())
             // .then(response => console.log(response))
             .catch(err => console.error(err));
