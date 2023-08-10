@@ -1,4 +1,4 @@
-const mongoose = require("./connection");
+const mongoose = require("mongoose");
 
 const restaurantsSchema = new mongoose.Schema({
     name: String,
@@ -6,6 +6,6 @@ const restaurantsSchema = new mongoose.Schema({
     city: String,
 });
 
-const Restaurants = mongoose.model("Restaurants", restaurantsSchema);
+const Restaurants = mongoose.model("restaurant", restaurantsSchema);
 
 module.exports = Restaurants;

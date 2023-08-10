@@ -2,7 +2,7 @@
 // Import Dependencies
 ////////////////////////////////////////
 const express = require("express");
-const Restaurants = require("../models/restaurants");
+const { Restaurants } = require("../models");
 ///////////////////////////////
 
 /////////////////////////////////////////
@@ -13,26 +13,26 @@ const router = express.Router();
 // ROUTES////////////////////////////////
 
   // RESTAURANTS INDEX ROUTE
-  router.get("/", async (req, res) => {
+router.get("/", async (req, res) => {
     try {
-      // send all people
-      res.json(await Restaurants.find({}));
+        // send all people
+        res.json(await Restaurants.find({}));
     } catch (error) {
-      //send error
-      res.status(400).json(error);
+        //send error
+        res.status(400).json(error);
     }
-  });
-  
-  // RESTAURANTS CREATE ROUTE
-  router.post("/", async (req, res) => {
+});
+
+// RESTAURANTS CREATE ROUTE
+router.post("/", async (req, res) => {
     try {
-      // send all restaurants
-      res.json(await Restaurants.create(req.body));
+        // send all restaurants
+        res.json(await Restaurants.create(req.body));
     } catch (error) {
-      //send error
-      res.status(400).json(error);
+        //send error
+        res.status(400).json(error);
     }
-  });
+});
 
 // RESTAURANTS UPDATE ROUTE
 router.put("/:id", async (req, res) => {

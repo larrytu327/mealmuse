@@ -2,7 +2,7 @@
 // Import Dependencies
 ////////////////////////////////////////
 const express = require("express");
-const Users = require("../models/users");
+const { Users } = require("../models");
 ///////////////////////////////
 
 /////////////////////////////////////////
