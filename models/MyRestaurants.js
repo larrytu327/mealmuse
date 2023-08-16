@@ -48,6 +48,6 @@ const myRestaurantSchema = new mongoose.Schema({
     distance: Number          
 });
 
-const myRestaurants = mongoose.model("MyRestaurant", myRestaurantSchema);
+const MyRestaurants = mongoose.model("MyRestaurant", myRestaurantSchema);
 
-module.exports = myRestaurants;
+module.exports = MyRestaurants;
