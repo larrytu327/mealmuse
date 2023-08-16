@@ -3,6 +3,7 @@
 ////////////////////////////////////////
 const express = require("express");
 const { Restaurants } = require("../models");
+const { handleValidateOwnership, requireToken } = require("../middleware/auth");
 ///////////////////////////////
 
 /////////////////////////////////////////
@@ -30,18 +31,24 @@ router.get('/', async (req, res) => {
 })
 
 // RESTAURANTS CREATE ROUTE
-router.post('/', async (req, res) => {
+router.post('/', requireToken,  async (req, res, next) => {
     try {
-        res.status(201).json(await Restaurants.create(req.body));
+      const owner = req.user_id
+      req.body.owner = owner
+      const newRestaurant = await Restaurants.create(req.body);
+      res.status(201).json(newRestaurant);
     } catch (err) {
-        console.log(err);
+      console.log(err);
     }
 })
-Restaurants.findOne
 
 router.get("/:id", async (req, res) => {
     try {
-        res.json(await Restaurants.findById(req.params.id));
+        // res.json(await Restaurants.findById(req.params.id));
+        const foundRestaurant = await Restaurants.findById(req.params.id)
+          .populate("owner")
+          .exec();
+        res.status(200).json(foundRestaurant);
       } catch (error) {
         res.status(400).json(error);
       }
@@ -50,10 +57,13 @@ router.get("/:id", async (req, res) => {
 // RESTAURANTS UPDATE ROUTE
 router.put("/:id", async (req, res) => {
     try {
-      // update by ID
-      res.json(
-        await Restaurants.findByIdAndUpdate(req.params.id, req.body, {new:true})
-      );
+      handleValidateOwnership(req, await Restaurants.findById(req.params.id))
+      const updatedRestaurant = await Restaurants.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true }
+      )
+      res.status(200).json(updatedRestaurant)
     } catch (error) {
       //send error
       res.status(400).json(error);
@@ -63,13 +73,30 @@ router.put("/:id", async (req, res) => {
   // DELETE ROUTE
   router.delete("/:id", async (req, res) => {
     try {
+      handleValidateOwnership(req, await Restaurants.findById(req.params.id));
+      const deletedRestaurant = await Restaurants.findByIdAndRemove(req.params.id);
+      res.status(200).json(deletedRestaurant);
       // delete  by ID
-      res.json(await Restaurants.findByIdAndRemove(req.params.id));
+      // res.json(await Restaurants.findByIdAndRemove(req.params.id));
     } catch (error) {
       //send error
       res.status(400).json(error);
     }
   });
-  
 
+  router.get( "/logout", requireToken, async (req, res, next) => {
+    try {
+      const currentUser = req.user.username
+      delete req.user
+      res.status(200).json({
+        message: `${currentUser} currently logged out`,
+        isLoggedIn: false,
+        token: "",
+      });
+    } catch (err) {
+      res.status(400).json({ error: err.message });
+    }
+  });
+  
+  
   module.exports = router;

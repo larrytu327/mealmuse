@@ -2,7 +2,7 @@
 // Import Dependencies
 ////////////////////////////////////////
 const express = require("express");
-const { Users } = require("../models");
+const { User } = require("../models");
 ///////////////////////////////
 
 /////////////////////////////////////////
@@ -16,7 +16,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
     try {
         // send all people
-        res.json(await Users.find({}));
+        res.json(await User.find({}));
     } catch (error) {
         //send error
         res.status(400).json(error);
@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         // send all restaurants
-        res.json(await Users.create(req.body));
+        res.json(await User.create(req.body));
     } catch (error) {
         //send error
         res.status(400).json(error);
@@ -39,7 +39,7 @@ router.put("/:id", async (req, res) => {
     try {
         // send all users
         res.json(
-        await Users.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
         );
     } catch (error) {
         //send error
@@ -51,7 +51,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     try {
         // send all users
-        res.json(await Users.findByIdAndRemove(req.params.id));
+        res.json(await User.findByIdAndRemove(req.params.id));
     } catch (error) {
         //send error
         res.status(400).json(error);

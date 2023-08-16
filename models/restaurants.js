@@ -45,7 +45,12 @@ const restaurantSchema = new mongoose.Schema({
     },
     phone: String,
     display_phone: String,
-    distance: Number          
+    distance: Number,
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    }          
 });
 
 const Restaurants = mongoose.model("Restaurant", restaurantSchema);
