@@ -15,7 +15,7 @@ const app = express();
 
 
 // import middlware
-// const morgan = require("morgan");
+const morgan = require("morgan");
 
 ///////////////////////////////
 // MiddleWare
