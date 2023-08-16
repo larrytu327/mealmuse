@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 4000;
 // import express
 const express = require("express");
 const cors = require("cors");
-const { restaurants, users } = require("./controllers")
+const { restaurants, users, myRestaurants } = require("./controllers")
 // create application object
 const app = express();
 
@@ -25,6 +25,7 @@ app.use(express.json()); // parse json bodies
 
 app.use("/restaurants", restaurants)
 app.use("/users", users)
+app.use("/myRestaurants", myRestaurants)
 
 ///////////////////////////////
 // ROUTES
