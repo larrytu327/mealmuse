@@ -20,10 +20,7 @@ const morgan = require("morgan");
 ///////////////////////////////
 // MiddleWare
 ////////////////////////////////
-app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true,
-})); // to prevent cors errors, open access to all origins
+app.use(cors()); // to prevent cors errors, open access to all origins
 app.use(morgan("dev")); // logging
 app.use(express.json()); // parse json bodies
 
