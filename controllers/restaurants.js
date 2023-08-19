@@ -55,7 +55,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // RESTAURANTS UPDATE ROUTE
-router.put("/:id", async (req, res) => {
+router.put("/:id", requireToken, async (req, res) => {
     try {
       handleValidateOwnership(req, await Restaurants.findById(req.params.id))
       const updatedRestaurant = await Restaurants.findByIdAndUpdate(
@@ -71,7 +71,7 @@ router.put("/:id", async (req, res) => {
   });
   
   // DELETE ROUTE
-  router.delete("/:id", async (req, res) => {
+  router.delete("/:id", requireToken, async (req, res, next) => {
     try {
       handleValidateOwnership(req, await Restaurants.findById(req.params.id));
       const deletedRestaurant = await Restaurants.findByIdAndRemove(req.params.id);
