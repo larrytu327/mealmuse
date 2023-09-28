@@ -48,7 +48,7 @@ router.post("/login", async (req, res, next) => {
     }
 });
 
-router.get( "/logout", requireToken, async (req, res, next) => {
+router.get("/logout", requireToken, async (req, res, next) => {
     try {
       const currentUser = req.user.username
       delete req.user
@@ -61,5 +61,29 @@ router.get( "/logout", requireToken, async (req, res, next) => {
       res.status(400).json({ error: err.message });
     }
   });
+
+router.post('/add-to-favorites', requireToken, async (req, res) => {
+    try {
+        const { restaurantId } = req.body;
+        const userId = req.user._id;
+
+        const user = await User.findById(userId);
+        console.log(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        if (!user.fav_restaurants.includes(restaurantId)) {
+            user.fav_restaurants.push(restaurantId);
+            console.log(`User: ${user}, Favorite Restaurants: ${user.fav_restaurants}`)
+            await user.save();
+        }
+
+        res.status(200).json({ message: 'Restaurant added to favorites' });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
 
 module.exports = router;
