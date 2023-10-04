@@ -78,9 +78,27 @@ router.post('/add-to-favorites', requireToken, async (req, res) => {
             await user.save();
         }
 
+        if (user.fav_restaurants.includes(restaurant)) {
+            for (let i = 0; i < user.fav_restaurants.length; i++) {
+                if (user.fav_restaurants[i] == restaurant) {
+                    user.fav_restaurants.splice(i, 1);
+                }
+            }
+            await user.save();
+        }
+
         res.status(200).json({ message: 'Restaurant added to favorites' });
     } catch (err) {
         console.log(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+router.get('/get-user', requireToken, async (req, res) => {
+    try {
+        const user = req.user;
+        res.status(200).json({ user });
+    } catch {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
