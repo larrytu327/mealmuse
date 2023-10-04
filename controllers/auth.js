@@ -75,7 +75,6 @@ router.post('/add-to-favorites', requireToken, async (req, res) => {
 
         if (!user.fav_restaurants.includes(restaurant)) {
             user.fav_restaurants.push(restaurant);
-            console.log(`User: ${user}, Favorite Restaurants: ${user.fav_restaurants.name}`)
             await user.save();
         }
 
