@@ -64,7 +64,7 @@ router.get("/logout", requireToken, async (req, res, next) => {
 
 router.post('/add-to-favorites', requireToken, async (req, res) => {
     try {
-        const { restaurantId } = req.body;
+        const { restaurant } = req.body;
         const userId = req.user._id;
 
         const user = await User.findById(userId);
@@ -73,8 +73,8 @@ router.post('/add-to-favorites', requireToken, async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        if (!user.fav_restaurants.includes(restaurantId)) {
-            user.fav_restaurants.push(restaurantId);
+        if (!user.fav_restaurants.includes(restaurant)) {
+            user.fav_restaurants.push(restaurant);
             console.log(`User: ${user}, Favorite Restaurants: ${user.fav_restaurants}`)
             await user.save();
         }
