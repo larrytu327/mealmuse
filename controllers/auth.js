@@ -73,19 +73,21 @@ router.post('/add-to-favorites', requireToken, async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        if (!user.fav_restaurants.includes(restaurant)) {
+        const isFavorite = user.fav_restaurants.includes(restaurant);
+
+        if (isFavorite) {
+            // Remove the restaurant if it's already a favorite
+            const index = user.fav_restaurants.indexOf(restaurant);
+            if (index !== -1) {
+                user.fav_restaurants.splice(index, 1);
+                await user.save();
+            }
+        } else {
+            // Add the restaurant if it's not a favorite
             user.fav_restaurants.push(restaurant);
             await user.save();
         }
-
-        if (user.fav_restaurants.includes(restaurant)) {
-            for (let i = 0; i < user.fav_restaurants.length; i++) {
-                if (user.fav_restaurants[i] == restaurant) {
-                    user.fav_restaurants.splice(i, 1);
-                }
-            }
-            await user.save();
-        }
+        
 
         res.status(200).json({ message: 'Restaurant added to favorites' });
     } catch (err) {
