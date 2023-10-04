@@ -82,10 +82,12 @@ router.post('/add-to-favorites', requireToken, async (req, res) => {
                 user.fav_restaurants.splice(index, 1);
                 await user.save();
             }
+            console.log(`This user has ${user.fav_restaurants.length} fav_restaurants`);
         } else {
             // Add the restaurant if it's not a favorite
             user.fav_restaurants.push(restaurant);
             await user.save();
+            console.log(`This user has ${user.fav_restaurants.length} fav_restaurants`);
         }
         
 
