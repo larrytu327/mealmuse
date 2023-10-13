@@ -79,8 +79,10 @@ router.post('/add-to-favorites', requireToken, async (req, res) => {
             // Remove the restaurant if it's already a favorite
             const index = user.fav_restaurants.indexOf(restaurant);
             if (index !== -1) {
+                console.log(`number of fav_restaurants before removal: ${user.fav_restaurants.length}`);
                 user.fav_restaurants.splice(index, 1);
                 await user.save();
+                console.log(`number of fav_restaurants after removal: ${user.fav_restaurants.length}`);
             }
             console.log(`This user has ${user.fav_restaurants.length} fav_restaurants`);
         } else {
@@ -101,7 +103,8 @@ router.post('/add-to-favorites', requireToken, async (req, res) => {
 router.get('/get-user', requireToken, async (req, res) => {
     try {
         const user = req.user;
-        res.status(200).json({ user });
+
+        res.status(200).json(user);
     } catch {
         res.status(500).json({ message: 'Internal server error' });
     }
