@@ -91,19 +91,17 @@ router.post('/add-to-favorites', requireToken, async (req, res) => {
             if (index != -1) {
                 console.log(`number of fav_restaurants before removal: ${user.fav_restaurants.length}`);
                 user.fav_restaurants.splice(index, 1);
-                await user.save();
                 console.log(`number of fav_restaurants after removal: ${user.fav_restaurants.length}`);
             }
             console.log(`This user has ${user.fav_restaurants.length} fav_restaurants`);
         } else {
             // Add the restaurant if it's not a favorite
             user.fav_restaurants.push(restaurant);
-            await user.save();
             console.log(`This user has ${user.fav_restaurants.length} fav_restaurants`);
         }
-        
-
-        res.status(200).json({ message: 'Restaurant added to favorites' });
+        await user.save();
+        const updatedUser = await User.findById(userId);
+        res.status(200).json({ message: 'Favorite Restaurants updated', user: updatedUser });
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: 'Internal server error' });
