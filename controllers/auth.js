@@ -80,7 +80,7 @@ router.post('/add-to-favorites', requireToken, async (req, res) => {
         if (isFavorite) {
             // Remove the restaurant if it's already a favorite
             // const index = user.fav_restaurants.indexOf(restaurant);
-            const index = -1;
+            let index = -1;
             for (let i = 0; i < user.fav_restaurants.length; i++) {
                 if (user.fav_restaurants[i]._id === restaurant._id) {
                     index = i;
