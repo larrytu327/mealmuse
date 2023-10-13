@@ -73,7 +73,8 @@ router.post('/add-to-favorites', requireToken, async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const isFavorite = user.fav_restaurants.includes(restaurant);
+        // const isFavorite = user.fav_restaurants.includes(restaurant);
+        const isFavorite = user.fav_restaurants.find(favRestaurant => favRestaurant._id === restaurant._id)
         console.log(`isFavorite is: ${isFavorite}`);
 
         if (isFavorite) {
