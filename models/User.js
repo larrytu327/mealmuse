@@ -21,6 +21,9 @@ const userSchema = new mongoose.Schema({
     fav_restaurants: {
         type: Array,
     },
+    addedToRandomizer: {
+        type: Array,
+    },
 },
 {
         timestamps: true,
