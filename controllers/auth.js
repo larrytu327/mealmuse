@@ -108,6 +108,46 @@ router.post('/add-to-favorites', requireToken, async (req, res) => {
     }
 });
 
+router.post('/add-to-randomizer', requireToken, async (req, res) => {
+    try {
+        const { restaurant } = req.body;
+        const userId = req.user._id;
+
+        const user = await User.findById(userId)
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const alreadyAdded = user.addedToRandomizer.find(addedToRandomizer => addedToRandomizer._id === restaurant._id) !== undefined;
+
+        if (alreadyAdded) {
+            let index = -1;
+            for (let i = 0; i < user.addedToRandomizer.length; i++) {
+                if (user.addedToRandomizer[i]._id === restaurant._id) {
+                    index = i;
+                    break;
+                }
+            }
+            console.log(`index of restaurant in user.addedToRandomizer: ${index}`)
+            if (index != -1) {
+                console.log(`number of addedToRandomizer before removal: ${user.addedToRandomizer.length}`);
+                user.addedToRandomizer.splice(index, 1);
+                console.log(`number of addedToRandomizer after removal: ${user.addedToRandomizer.length}`);
+            }
+            console.log(`This user has ${user.addedToRandomizer.length} addedToRandomizer`);
+        } else {
+            // Add the restaurant if it's not a favorite
+            user.addedToRandomizer.push(restaurant);
+            console.log(`This user has ${user.addedToRandomizer.length} addedToRandomizer`);
+        }
+        await user.save();
+        const updatedUser = await User.findById(userId);
+        res.status(200).json({ message: 'Favorite Restaurant added to Randomizer', user: updatedUser });
+    } catch {
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
 router.get('/get-user', requireToken, async (req, res) => {
     try {
         const user = req.user;
