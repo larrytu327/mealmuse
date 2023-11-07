@@ -37,18 +37,18 @@ router.get('/', async (req, res) => {
         //   headers: yelpApiOptions.headers,
         // });
 
-        const options = {
-          method: 'GET',
-          headers: {
-            accept: 'application/json',
-            Authorization: APIKey
-          },
-          params: {
-            location: 'Dallas',
-            sort_by: 'best_match',
-            limit: 50,
-          },
-        };
+        // const options = {
+        //   method: 'GET',
+        //   headers: {
+        //     accept: 'application/json',
+        //     Authorization: APIKey
+        //   },
+        //   params: {
+        //     location: 'Dallas',
+        //     sort_by: 'best_match',
+        //     limit: 50,
+        //   },
+        // };
       //this fetch is for San Francisco with limit of 50 businesses  
       // const myRestaurants = await fetch(yelpApiEndpoint, options)
       //     .then(response => response.json())
@@ -65,6 +65,18 @@ router.get('/', async (req, res) => {
       //   // myRestaurants = apiResponse.data.businesses;
       //   res.status(200).json(myRestaurants.businesses);
       try {
+        const options = {
+          method: 'GET',
+          headers: {
+            accept: 'application/json',
+            Authorization: APIKey
+          },
+          params: {
+            location: 'Dallas',
+            sort_by: 'best_match',
+            limit: 50,
+          },
+        };
         const response = await fetch(yelpApiEndpoint, options);
         if (!response.ok) {
           throw new Error(`Failed to fetch data. Status: ${response.status}`);
