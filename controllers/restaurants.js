@@ -3,6 +3,7 @@
 ////////////////////////////////////////
 const express = require("express");
 const axios = require("axios");
+const APIKey = process.env.APIKey;
 const yelpApiEndpoint = "https://api.yelp.com/v3/businesses/search";
 const yelpApiOptions = {
   headers: {
