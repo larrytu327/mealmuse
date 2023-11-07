@@ -50,20 +50,33 @@ router.get('/', async (req, res) => {
           },
         };
       //this fetch is for San Francisco with limit of 50 businesses  
-      const myRestaurants = await fetch(yelpApiEndpoint, options)
-          .then(response => response.json())
-          // .then(response => console.log(response))
-          .catch(err => console.error(err));
+      // const myRestaurants = await fetch(yelpApiEndpoint, options)
+      //     .then(response => response.json())
+      //     // .then(response => console.log(response))
+      //     .catch(err => console.error(err));
 
-        // if (req.query.search) {
-        //     myRestaurants = apiResponse.data.businesses;
-        //     console.log(myRestaurants);
-        // } else {
-        //     myRestaurants = apiResponse.data.businesses;
-        // }
+      //   // if (req.query.search) {
+      //   //     myRestaurants = apiResponse.data.businesses;
+      //   //     console.log(myRestaurants);
+      //   // } else {
+      //   //     myRestaurants = apiResponse.data.businesses;
+      //   // }
 
-        // myRestaurants = apiResponse.data.businesses;
-        res.status(200).json(myRestaurants.businesses);
+      //   // myRestaurants = apiResponse.data.businesses;
+      //   res.status(200).json(myRestaurants.businesses);
+      try {
+        const response = await fetch(yelpApiEndpoint, options);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch data. Status: ${response.status}`);
+        }
+        const data = await response.json();
+        const restaurants = data.businesses;
+
+        res.status(200).json(restaurants);
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'An error occurred while fetching data' })
+      }
     } catch(err) {
         console.log(err);
     }
