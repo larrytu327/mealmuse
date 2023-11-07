@@ -24,19 +24,7 @@ const router = express.Router();
   // RESTAURANTS INDEX ROUTE
 router.get('/', async (req, res) => {
     try {
-        // let myRestaurants;
-        console.log(req.query);
-        // const searchQuery = req.query.search;
-        // const apiResponse = await axios.get(yelpApiEndpoint, {
-        //   params: {
-        //     location: 'Dallas', //Customize location as needed
-        //     // term: searchQuery,
-        //     sort_by: 'best_match',
-        //     limit: 50,
-        //   },
-        //   headers: yelpApiOptions.headers,
-        // });
-        const location = 'Dallas';
+        const location = 'Cupertino';
         const limit = 50;
         const url = `${yelpApiEndpoint}?location=${location}&sort_by=best_match&limit=${limit}`;
         const options = {
@@ -45,17 +33,7 @@ router.get('/', async (req, res) => {
             accept: 'application/json',
             Authorization: APIKey
           },
-          // params: {
-          //   location: 'Dallas',
-          //   sort_by: 'best_match',
-          //   limit: 50,
-          // },
         };
-      //this fetch is for San Francisco with limit of 50 businesses  
-      // const myRestaurants = await fetch(url, options)
-      //     .then(response => response.json())
-      //     // .then(response => console.log(response))
-      //     .catch(err => console.error(err));
 
       //   // if (req.query.search) {
       //   //     myRestaurants = apiResponse.data.businesses;
