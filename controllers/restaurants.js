@@ -37,34 +37,6 @@ router.get('/', async (req, res) => {
         //   headers: yelpApiOptions.headers,
         // });
 
-        // const options = {
-        //   method: 'GET',
-        //   headers: {
-        //     accept: 'application/json',
-        //     Authorization: APIKey
-        //   },
-        //   params: {
-        //     location: 'Dallas',
-        //     sort_by: 'best_match',
-        //     limit: 50,
-        //   },
-        // };
-      //this fetch is for San Francisco with limit of 50 businesses  
-      // const myRestaurants = await fetch(yelpApiEndpoint, options)
-      //     .then(response => response.json())
-      //     // .then(response => console.log(response))
-      //     .catch(err => console.error(err));
-
-      //   // if (req.query.search) {
-      //   //     myRestaurants = apiResponse.data.businesses;
-      //   //     console.log(myRestaurants);
-      //   // } else {
-      //   //     myRestaurants = apiResponse.data.businesses;
-      //   // }
-
-      //   // myRestaurants = apiResponse.data.businesses;
-      //   res.status(200).json(myRestaurants.businesses);
-      try {
         const options = {
           method: 'GET',
           headers: {
@@ -77,18 +49,46 @@ router.get('/', async (req, res) => {
             limit: 50,
           },
         };
-        const response = await fetch(yelpApiEndpoint, options);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch data. Status: ${response.status}`);
-        }
-        const data = await response.json();
-        const restaurants = data.businesses;
+      //this fetch is for San Francisco with limit of 50 businesses  
+      const myRestaurants = await fetch(yelpApiEndpoint, options)
+          .then(response => response.json())
+          // .then(response => console.log(response))
+          .catch(err => console.error(err));
 
-        res.status(200).json(restaurants);
-      } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: 'An error occurred while fetching data' })
-      }
+        // if (req.query.search) {
+        //     myRestaurants = apiResponse.data.businesses;
+        //     console.log(myRestaurants);
+        // } else {
+        //     myRestaurants = apiResponse.data.businesses;
+        // }
+
+        // myRestaurants = apiResponse.data.businesses;
+        res.status(200).json(myRestaurants.businesses);
+      // try {
+      //   const options = {
+      //     method: 'GET',
+      //     headers: {
+      //       accept: 'application/json',
+      //       Authorization: APIKey
+      //     },
+      //     params: {
+      //       location: 'Dallas',
+      //       sort_by: 'best_match',
+      //       limit: 50,
+      //     },
+      //   };
+      //   const response = await fetch(yelpApiEndpoint, options);
+      //   if (!response.ok) {
+      //     throw new Error(`Failed to fetch data. Status: ${response.status}`);
+      //   }
+      //   const data = await response.json();
+      //   const restaurants = data.businesses;
+
+      //   res.status(200).json(restaurants);
+      // } catch (error) {
+      //   console.log(error);
+      //   res.status(500).json({ error: 'An error occurred while fetching data' })
+      // }
     } catch(err) {
         console.log(err);
     }
