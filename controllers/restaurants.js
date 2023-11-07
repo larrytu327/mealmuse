@@ -23,7 +23,7 @@ const router = express.Router();
   // RESTAURANTS INDEX ROUTE
 router.get('/', async (req, res) => {
     try {
-        let myRestaurants;
+        // let myRestaurants;
         console.log(req.query);
         // const searchQuery = req.query.search;
         // const apiResponse = await axios.get(yelpApiEndpoint, {
