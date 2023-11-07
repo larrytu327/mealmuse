@@ -25,24 +25,45 @@ router.get('/', async (req, res) => {
     try {
         let myRestaurants;
         console.log(req.query);
-        const searchQuery = req.query.search;
-        const apiResponse = await axios.get(yelpApiEndpoint, {
-          params: {
-            location: 'Dallas', //Customize location as needed
-            term: searchQuery,
-            sort_by: 'best_match',
-            limit: 50,
-          },
-          headers: yelpApiOptions.headers,
-        });
+        // const searchQuery = req.query.search;
+        // const apiResponse = await axios.get(yelpApiEndpoint, {
+        //   params: {
+        //     location: 'Dallas', //Customize location as needed
+        //     // term: searchQuery,
+        //     sort_by: 'best_match',
+        //     limit: 50,
+        //   },
+        //   headers: yelpApiOptions.headers,
+        // });
 
-        if (req.query.search) {
-            myRestaurants = apiResponse.data.businesses;
-            console.log(myRestaurants);
-        } else {
-            myRestaurants = apiResponse.data.businesses;
-        }
-        res.status(200).json(myRestaurants);
+        const options = {
+          method: 'GET',
+          headers: {
+            accept: 'application/json',
+            Authorization: APIKey
+          }
+        };
+      //this fetch is for San Francisco with limit of 50 businesses  
+      const myRestaurants = await fetch(yelpApiEndpoint, {
+        params: {
+          location: 'Dallas',
+          sort_by: 'best_match',
+          limit: 50,
+        },
+      } options)
+          .then(response => response.json())
+          // .then(response => console.log(response))
+          .catch(err => console.error(err));
+
+        // if (req.query.search) {
+        //     myRestaurants = apiResponse.data.businesses;
+        //     console.log(myRestaurants);
+        // } else {
+        //     myRestaurants = apiResponse.data.businesses;
+        // }
+
+        // myRestaurants = apiResponse.data.businesses;
+        res.status(200).json(myRestaurants.businesses);
     } catch(err) {
         console.log(err);
     }
