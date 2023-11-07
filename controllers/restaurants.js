@@ -2,6 +2,13 @@
 // Import Dependencies
 ////////////////////////////////////////
 const express = require("express");
+const axios = require("axios");
+const yelpApiEndpoint = "https://api.yelp.com/v3/businesses/search";
+const yelpApiOptions = {
+  headers: {
+    Authorization: `Bearer ${process.env.APIKey}`, 
+  }
+}
 const { Restaurants } = require("../models");
 const { handleValidateOwnership, requireToken } = require("../middleware/auth");
 ///////////////////////////////
