@@ -41,16 +41,15 @@ router.get('/', async (req, res) => {
           headers: {
             accept: 'application/json',
             Authorization: APIKey
-          }
+          },
+          params: {
+            location: 'Dallas',
+            sort_by: 'best_match',
+            limit: 50,
+          },
         };
       //this fetch is for San Francisco with limit of 50 businesses  
-      const myRestaurants = await fetch(yelpApiEndpoint, {
-        params: {
-          location: 'Dallas',
-          sort_by: 'best_match',
-          limit: 50,
-        },
-      } options)
+      const myRestaurants = await fetch(yelpApiEndpoint, options)
           .then(response => response.json())
           // .then(response => console.log(response))
           .catch(err => console.error(err));
