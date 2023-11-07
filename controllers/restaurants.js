@@ -30,6 +30,7 @@ router.get('/', async (req, res) => {
           params: {
             location: 'Dallas', //Customize location as needed
             term: searchQuery,
+            sort_by: best_match,
             limit: 50,
           },
           headers: yelpApiOptions.headers,
