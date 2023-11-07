@@ -25,11 +25,21 @@ router.get('/', async (req, res) => {
     try {
         let myRestaurants;
         console.log(req.query);
+        const searchQuery = req.query.search;
+        const apiResponse = await axios.get(yelpApiEndpoint, {
+          params: {
+            location: 'Dallas', //Customize location as needed
+            term: searchQuery,
+            limit: 50,
+          },
+          headers: yelpApiOptions.headers,
+        });
+
         if (req.query.search) {
-            myRestaurants = await Restaurants.find({name: req.query.search})
+            myRestaurants = apiResponse.data.businesses;
             console.log(myRestaurants);
         } else {
-            myRestaurants = await Restaurants.find({});
+            myRestaurants = apiResponse.data.businesses;
         }
         res.status(200).json(myRestaurants);
     } catch(err) {
