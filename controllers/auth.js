@@ -74,7 +74,7 @@ router.post('/add-to-favorites', requireToken, async (req, res) => {
         }
 
         // const isFavorite = user.fav_restaurants.includes(restaurant);
-        const isFavorite = user.fav_restaurants.find(favRestaurant => favRestaurant._id === restaurant._id) !== undefined;
+        const isFavorite = user.fav_restaurants.find(favRestaurant => favRestaurant.id === restaurant.id) !== undefined;
         console.log(`isFavorite is: ${isFavorite}`);
 
         if (isFavorite) {
@@ -82,7 +82,7 @@ router.post('/add-to-favorites', requireToken, async (req, res) => {
             // const index = user.fav_restaurants.indexOf(restaurant);
             let index = -1;
             for (let i = 0; i < user.fav_restaurants.length; i++) {
-                if (user.fav_restaurants[i]._id === restaurant._id) {
+                if (user.fav_restaurants[i].id === restaurant.id) {
                     index = i;
                     break;
                 }
