@@ -118,12 +118,12 @@ router.post('/add-to-randomizer', requireToken, async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const alreadyAdded = user.addedToRandomizer.find(addedToRandomizer => addedToRandomizer._id === restaurant._id) !== undefined;
+        const alreadyAdded = user.addedToRandomizer.find(addedToRandomizer => addedToRandomizer.id === restaurant.id) !== undefined;
 
         if (alreadyAdded) {
             let index = -1;
             for (let i = 0; i < user.addedToRandomizer.length; i++) {
-                if (user.addedToRandomizer[i]._id === restaurant._id) {
+                if (user.addedToRandomizer[i].id === restaurant.id) {
                     index = i;
                     break;
                 }
