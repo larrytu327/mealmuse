@@ -27,8 +27,8 @@ router.get('/', async (req, res) => {
         const location = req.query.location || 'San_Francisco';
         const categories = req.query.categories || 'undefined';
         const limit = 50;
-        const params = new URLSearchParams({ location, categories });
-        const urlWithParams = `${yelpApiEndpoint}?${params}&sort_by=best_match&limit=${limit}`;
+        // const params = new URLSearchParams({ location, categories });
+        const urlWithParams = `${yelpApiEndpoint}?${location}&${categories}&sort_by=best_match&limit=${limit}`;
         const options = {
           method: 'GET',
           headers: {
