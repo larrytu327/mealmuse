@@ -47,7 +47,7 @@ router.get('/', async (req, res) => {
       //   // myRestaurants = apiResponse.data.businesses;
       //   res.status(200).json(myRestaurants.businesses);
       try {
-        const response = await fetch(url, options);
+        const response = await fetch(urlWithParams, options);
         if (!response.ok) {
           throw new Error(`Failed to fetch data. Status: ${response.status}`);
         }
