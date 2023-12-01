@@ -25,8 +25,9 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     try {
         const location = req.query.location || 'San_Francisco';
+        const categories = req.query.categories;
         const limit = 50;
-        const url = `${yelpApiEndpoint}?location=${location}&sort_by=best_match&limit=${limit}`;
+        const url = `${yelpApiEndpoint}?location=${location}&categories=${categories}&sort_by=best_match&limit=${limit}`;
         const options = {
           method: 'GET',
           headers: {
