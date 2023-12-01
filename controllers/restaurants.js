@@ -24,7 +24,7 @@ const router = express.Router();
   // RESTAURANTS INDEX ROUTE
 router.get('/', async (req, res) => {
     try {
-        const location = req.query.city || 'San_Francisco';
+        const location = req.query.location || 'San_Francisco';
         const limit = 50;
         const url = `${yelpApiEndpoint}?location=${location}&sort_by=best_match&limit=${limit}`;
         const options = {
