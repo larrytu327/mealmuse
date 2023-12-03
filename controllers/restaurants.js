@@ -93,12 +93,12 @@ router.get("/:id", async (req, res) => {
           },
         };
         try {
-          const response = await fetch(urlWithParams, options);
+          const response = await fetch(url, options);
           if (!response.ok) {
             throw new Error(`Failed to fetch data. Status: ${response.status}`);
           }
           const data = await response.json();
-            
+
           res.status(200).json(data);
         } catch (error) {
           console.log(error);
