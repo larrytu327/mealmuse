@@ -83,7 +83,7 @@ router.get("/:id", async (req, res) => {
         //   .populate("owner")
         //   .exec();
         // res.status(200).json(foundRestaurant);
-        const id = req.query.id;
+        const id = req.params.id;
         const url = `https://api.yelp.com/v3/businesses/${id}`;
         const options = {
           method: 'GET',
