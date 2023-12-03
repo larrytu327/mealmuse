@@ -79,14 +79,35 @@ router.post('/', requireToken,  async (req, res, next) => {
 router.get("/:id", async (req, res) => {
     try {
         // res.json(await Restaurants.findById(req.params.id));
-        const foundRestaurant = await Restaurants.findById(req.params.id)
-          .populate("owner")
-          .exec();
-        res.status(200).json(foundRestaurant);
-      } catch (error) {
-        res.status(400).json(error);
+        // const foundRestaurant = await Restaurants.findById(req.params.id)
+        //   .populate("owner")
+        //   .exec();
+        // res.status(200).json(foundRestaurant);
+        const id = req.query.id;
+        const url = `https://api.yelp.com/v3/businesses/${id}`;
+        const options = {
+          method: 'GET',
+          headers: {
+            accept: 'application/json',
+            Authorization: APIKey
+          },
+        };
+        try {
+          const response = await fetch(urlWithParams, options);
+          if (!response.ok) {
+            throw new Error(`Failed to fetch data. Status: ${response.status}`);
+          }
+          const data = await response.json();
+            
+          res.status(200).json(data);
+        } catch (error) {
+          console.log(error);
+          res.status(500).json({ error: 'An error occurred while fetching data' })
+        }
+      } catch(err) {
+          console.log(err);
       }
-});
+    });
 
 // RESTAURANTS UPDATE ROUTE
 router.put("/:id", requireToken, async (req, res) => {
